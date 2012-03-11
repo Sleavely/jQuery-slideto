@@ -10,6 +10,8 @@
 				overflow: "hidden"
 			}, options);
 			
+			var $wrapper = this;
+			
 			//FYI: Math.abs() always returns a positive number
 			settings.offset = Math.abs(settings.offset);
 			
@@ -19,8 +21,8 @@
 			*/
 			var lastposition = (settings.offset - (settings.offset * 2));
 			//how much each slide should move. This is the 500px mentioned in the example.
-			var increase = jQuery("#wrapper").width();
-			var $children = jQuery("#wrapper").children();
+			var increase = $wrapper.width();
+			var $children = $wrapper.children();
 			this.children().each(function(){
 				jQuery(this).css({left: (lastposition * increase)+"px", position: "absolute", "width": "100%"});
 				lastposition++;
