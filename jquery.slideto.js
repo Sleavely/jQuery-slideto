@@ -2,6 +2,7 @@
 	
 	var methods = {
 		init : function( options ) {
+			var $wrapper = this; //expecting a wrapper in selector
 			
 			//default options, overriden by the options param
 			var settings = $.extend({
@@ -9,8 +10,6 @@
 				offset: 0, //multiplier; not a css unit
 				overflow: "hidden"
 			}, options);
-			
-			var $wrapper = this;
 			
 			//FYI: Math.abs() always returns a positive number
 			settings.offset = Math.abs(settings.offset);
@@ -37,6 +36,7 @@
 			//ready to slide.
 		},
 		slide : function( options ) {
+			var $elem = this; //expecting a slideto-child in selector
 			
 			var settings = $.extend({
 				instant : false, //animate movement or just css it
@@ -44,7 +44,6 @@
 				speed: "fast"
 			}, options);
 			
-			$elem = this;
 			var $wrapper = $elem.parents(".slidetoWrapper").first();
 			//set wrapper height to fit $elem, and change the slidetoActive
 			$wrapper.css("min-height", $elem.height() + "px").children(".slidetoActive").removeClass("slidetoActive");
@@ -61,10 +60,24 @@
 			return $elem;
 		},
 		next : function( options ){
-			//TODO: find which one is active, next(), and use this.slide(options);
+			var $wrapper = this; //expecting a wrapper in selector
+			//using one function for both next() and prev()
+			methods.nextprev($wrapper, 1, options);
 		},
 		prev : function( options ){
-			//TODO: find which one is active, prev(), and use this.slide(options);
+			var $wrapper = this; //expecting a wrapper in selector
+			methods.nextprev($wrapper, -1, options);
+		},
+		nextprev : function( $wrapper, direction, options ){
+			//loop through children and see which one is active
+			var i = 0;
+			var current;
+			$wrapper.children().each(function(){
+				if(jQuery(this).hasClass("slidetoActive")) current = i;
+				i++;
+			});
+			//now either add 1 or -1 to that, and slide there!
+			$wrapper.children().eq(current + direction).slideto(options);
 		}
 	};
 	
