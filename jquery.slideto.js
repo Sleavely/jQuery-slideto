@@ -25,6 +25,7 @@
 			var $children = $wrapper.children();
 			this.children().each(function(){
 				jQuery(this).css({left: (lastposition * increase)+"px", position: "absolute", "width": "100%"});
+				if((lastposition * increase) === 0) jQuery(this).addClass("slidetoActive");
 				lastposition++;
 			});
 			this.css({
@@ -45,7 +46,9 @@
 			
 			$elem = this;
 			var $wrapper = $elem.parents(".slidetoWrapper").first();
-			$wrapper.css("min-height", $elem.height() + "px");
+			//set wrapper height to fit $elem, and change the slidetoActive
+			$wrapper.css("min-height", $elem.height() + "px").children(".slidetoActive").removeClass("slidetoActive");
+			$elem.addClass("slidetoActive");
 			var currentleft = $elem.css("left");
 			//slide all until we get there.
 			$wrapper.children().each(function(){
