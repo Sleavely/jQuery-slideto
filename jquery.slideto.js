@@ -52,7 +52,7 @@
 			//slide all until we get there.
 			$wrapper.children().each(function(){
 				if(!settings.instant){
-					jQuery(this).animate({left: "-="+currentleft}, settings.speed);
+					jQuery(this).animate({left: "-="+currentleft}, {duration: settings.speed, queue: "slideto"});
 				}else{
 					jQuery(this).css({left: "-="+currentleft});
 				}
